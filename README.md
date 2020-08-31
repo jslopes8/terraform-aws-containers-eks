@@ -55,6 +55,20 @@ module "cluster" {
     ]
 }
 ```
+Each document configuration may have `vpc_config` blocks, which each accept the following arguments:
+
+- subnet_ids (Required) - list of subnet IDs. Must be in at least two different availability zones.
+- public_access_cidrs (Required) - indicates which CIDR blocks can access the API server endpoint when enabled.
+- security_group_ids (Opcional) - list of security group IDs for allow communication between your worker nodes and the Kubernetes control plane.
+- endpoint_public_access (Opcional) - indicates whether or not the API server endpoint is enabled. Default is `true`.
+- endpoint_private_access (Opcional) - indicates whether or not the API server endpoint is enabled. Default is `false`.
+
+Each document configuration may have `fargate_profile` blocks, which each accept the following arguments:
+
+- name (Required) - name of the EKS Fargate Profile.
+- subnet_ids (Required) - list of subnet IDs. Must be in at least two different availability zones.
+- selector (Required) - the `selector` block is dinamic and may have one or more `namespace` argument.
+
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Variables Inputs

@@ -189,6 +189,8 @@ resource "aws_eks_fargate_profile" "main" {
     }
 }
 resource "null_resource" "coredns_patch" {
+    depends_on = [ aws_eks_fargate_profile.main  ]
+
     count = var.create ? length(var.fargate_profile) : 0
   
     provisioner "local-exec" {
@@ -203,6 +205,8 @@ resource "null_resource" "coredns_patch" {
     }
 }
 resource "null_resource" "coredns_rollout" {
+    depends_on = [ aws_eks_fargate_profile.main  ]
+
     count = var.create ? length(var.fargate_profile) : 0
   
     provisioner "local-exec" {
