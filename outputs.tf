@@ -1,8 +1,8 @@
-output "endpoint" {
+output "api_server" {
   value = aws_eks_cluster.main.0.endpoint
 }
 
-output "kubeconfig" {
+output "kubeconfig_cert_data" {
   value = aws_eks_cluster.main.0.certificate_authority.0.data
 }
 output "kubeconfig_path" {

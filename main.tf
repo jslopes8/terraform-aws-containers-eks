@@ -194,7 +194,7 @@ resource "null_resource" "coredns_patch" {
     provisioner "local-exec" {
         interpreter = ["/bin/bash", "-c"]
         command     = <<EOF
-            kubectl --kubeconfig=<(echo "${data.template_file.main.0.rendered}") \
+            kubectl --kubeconfig=${local_file.main.0.filename} \
             patch deployment coredns \
             --namespace kube-system \
             --type=json \
@@ -208,7 +208,7 @@ resource "null_resource" "coredns_rollout" {
     provisioner "local-exec" {
         interpreter = ["/bin/bash", "-c"]
         command     = <<EOF
-            kubectl --kubeconfig=<(echo "${data.template_file.main.0.rendered}") \
+            kubectl --kubeconfig=${local_file.main.0.filename} \
             rollout restart deployment coredns \
             --namespace kube-system
         EOF
