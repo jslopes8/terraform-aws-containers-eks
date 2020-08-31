@@ -55,7 +55,8 @@ module "cluster" {
     ]
 }
 ```
-Each document configuration may have `vpc_config` blocks, which each accept the following arguments:
+
+Each document configuration can have one `vpc_config` block, which accepts the following arguments:
 
 - subnet_ids (Required) - list of subnet IDs. Must be in at least two different availability zones.
 - public_access_cidrs (Required) - indicates which CIDR blocks can access the API server endpoint when enabled.
@@ -63,7 +64,7 @@ Each document configuration may have `vpc_config` blocks, which each accept the 
 - endpoint_public_access (Opcional) - indicates whether or not the API server endpoint is enabled. Default is `true`.
 - endpoint_private_access (Opcional) - indicates whether or not the API server endpoint is enabled. Default is `false`.
 
-Each document configuration may have `fargate_profile` blocks, which each accept the following arguments:
+Each document configuration may have one `fargate_profile` blocks, which accepts the following arguments:
 
 - name (Required) - name of the EKS Fargate Profile.
 - subnet_ids (Required) - list of subnet IDs. Must be in at least two different availability zones.
