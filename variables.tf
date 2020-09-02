@@ -9,10 +9,6 @@ variable "enabled_cluster_log_types" {
     type = list
     default = []
 }
-variable "region" {
-    type = string
-    default = ""
-}
 variable "cluster_version" {
     type = string
     default = null
@@ -40,4 +36,16 @@ variable "fargate_profile" {
 variable "kubeconfig_path" {
     type = string
     default = ""
+}
+variable "alb-ingress-controller" {
+    type = bool
+    default = false
+}
+variable "vpc_id" {
+    type = string
+    default = ""
+}
+variable "nginx_ingress" {
+    type = bool
+    default = false
 }
