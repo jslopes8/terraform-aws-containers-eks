@@ -55,7 +55,7 @@ module "cluster" {
     ]
 }
 ```
-Example Created Complete Cluster EKS over Fargate host
+Example Creating a Complete EKS Cluster on Fargate Host
 ```hcl
 module "cluster" {
     source = "git@github.com:jslopes8/terraform-aws-eks.git?ref=v2.0
@@ -70,7 +70,10 @@ module "cluster" {
             public_access_cidrs = ["0.0.0.0/0"]
         }
     ]
-    
+
+    enabled_cluster_log_types   = [ "api", "audit" ]
+    retention_in_days           = "14"
+
     alb-ingress-controller = "true"
 
     fargate_profile = [
@@ -99,6 +102,7 @@ module "cluster" {
             ]
         }
     ]
+
     kubeconfig_path = "/home/jslopes/config"
     default_tags    = local.tags
 }
