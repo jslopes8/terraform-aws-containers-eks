@@ -43,6 +43,9 @@ data "aws_iam_policy_document" "system_user_admin_0" {
     ]
     resources = [ aws_iam_role.system_user_admin.0.arn ]
   }
+  depends_on = [
+    aws_iam_role.system_user_admin
+  ]
 }
 resource "aws_iam_group" "system_user_admin" {
   count = var.create && var.system_users_admin ? 1 : 0
@@ -50,13 +53,15 @@ resource "aws_iam_group" "system_user_admin" {
   name = "EKSAdmin"
   path = "/"
 }
+
 resource "aws_iam_policy" "system_user_admin" {
   count = var.create && var.system_users_admin ? 1 : 0
 
   name        = "EKSAdmin-Policy"
   description = "Kubernetes administrator policy (for AWS IAM Authenticator for Kubernetes)."
-  policy      = aws_iam_policy_document.system_user_admin_0.0.rendered
+  policy      = data.aws_iam_policy_document.system_user_admin_0.0.json
 }
+
 resource "aws_iam_group_policy_attachment" "system_user_admin" {
   count = var.create && var.system_users_admin ? 1 : 0
 

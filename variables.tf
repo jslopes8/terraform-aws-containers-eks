@@ -37,6 +37,10 @@ variable "fargate_profile" {
     type = any 
     default = []
 }
+variable "node_group" {
+    type = any 
+    default = []
+}
 variable "kubeconfig_path" {
     type = string
     default = ""
