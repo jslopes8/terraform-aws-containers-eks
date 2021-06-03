@@ -93,7 +93,7 @@ resource "aws_iam_group_membership" "system_users_admin" {
   users = [
     aws_iam_user.system_users_admin.0.name
   ]
-  group = aws_iam_group.system_users_admin.0.name
+  group = "EKSAdmin"
 }
 
 #
