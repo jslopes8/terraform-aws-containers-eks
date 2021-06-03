@@ -130,7 +130,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
         }
     }
 }
-resource "aws_iam_role" "main" {
+resource "aws_iam_role" "kubeconfig_path" {
     count = var.create && length(var.kubeconfig_path) > 0 ? 1 : 0
 
     assume_role_policy = data.aws_iam_policy_document.assume_role_policy.0.json
