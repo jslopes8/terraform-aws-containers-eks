@@ -5,6 +5,10 @@ variable "create" {
 variable "cluster_name" {
     type = string
 }
+variable "system_users_admin" {
+  type = bool
+  default = true
+}
 variable "enabled_cluster_log_types" {
     type = list
     default = []
