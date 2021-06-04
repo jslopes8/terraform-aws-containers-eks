@@ -200,7 +200,7 @@ resource "kubernetes_namespace" "rbac_dev" {
     name = "development"
   }
 }
-resource "kubernetes_cluster_role" "rbac_dev" {
+resource "kubernetes_role" "rbac_dev" {
   depends_on = [ aws_eks_cluster.main  ]
   count = var.create && var.system_users_develop ? 1 : 0
 
@@ -217,8 +217,8 @@ resource "kubernetes_cluster_role" "rbac_dev" {
   }
 }
 
-resource "kubernetes_cluster_role_binding" "rbac_dev" {
-  depends_on = [ kubernetes_cluster_role.rbac_dev, aws_eks_cluster.main  ]
+resource "kubernetes_role_binding" "rbac_dev" {
+  depends_on = [ kubernetes_role.rbac_dev, aws_eks_cluster.main  ]
 
   count = var.create && var.system_users_develop ? 1 : 0   
 
@@ -231,7 +231,7 @@ resource "kubernetes_cluster_role_binding" "rbac_dev" {
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "Role"
-    name      = kubernetes_cluster_role.rbac_dev.0.metadata[0].name
+    name      = kubernetes_role.rbac_dev.0.metadata[0].name
   }
   subject {
     kind  = "User"
