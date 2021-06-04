@@ -9,6 +9,10 @@ variable "system_users_admin" {
   type = bool
   default = true
 }
+variable "system_users_develop" {
+  type = bool
+  default = true
+}
 variable "enabled_cluster_log_types" {
     type = list
     default = []
