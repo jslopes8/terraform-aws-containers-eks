@@ -3,6 +3,9 @@
 # Cluster EKS
 #
 
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
 #
 # EkS Cluster - IAM Policy
 #
@@ -164,4 +167,16 @@ resource "aws_cloudwatch_log_group" "main" {
     depends_on = [
       aws_eks_cluster.main
     ]
+}
+
+#
+# Terraform Manager Kubernetes
+#
+provider "kubernetes" {
+
+    host                   = data.aws_eks_cluster.main.0.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.main.0.certificate_authority[0].data)
+    token                  = data.aws_eks_cluster_auth.main.0.token
+    #load_config_file       = false
+    #version                = "~> 1.10"
 }

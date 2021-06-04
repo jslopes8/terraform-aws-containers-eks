@@ -2,15 +2,7 @@
 #
 # Kubernetes Resources - ALB Ingress Controller
 #
- 
-provider "kubernetes" {
 
-    host                   = data.aws_eks_cluster.main.0.endpoint
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.main.0.certificate_authority[0].data)
-    token                  = data.aws_eks_cluster_auth.main.0.token
-    #load_config_file       = false
-    #version                = "~> 1.10"
-}
 data "aws_iam_policy_document" "alb_ingress" {
     count = var.create && var.alb-ingress-controller ? 1 : 0
 
@@ -91,8 +83,6 @@ resource "aws_iam_policy" "alb_ingress_policy" {
 locals {
     namespace_ingress = "kube-ingress"
 }
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
 data "aws_iam_policy_document" "alb_ingress_sts" {
     count = var.create && var.alb-ingress-controller ? 1 : 0
 
