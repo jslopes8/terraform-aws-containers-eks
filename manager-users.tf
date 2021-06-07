@@ -116,7 +116,7 @@ resource "aws_iam_group_membership" "system_users_admin" {
 resource "aws_iam_role" "system_user_dev" {
   count = var.create && var.system_users_develop ? 1 : 0
 
-  name                = "EKSAdmin"
+  name                = "EKSDev"
   description         = "Kubernetes developer role (for AWS IAM Authenticator for Kubernetes)."
   path                = "/"
   assume_role_policy  = data.aws_iam_policy_document.system_user.0.json
