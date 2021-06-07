@@ -73,10 +73,13 @@ resource "aws_eks_node_group" "main" {
   release_version       = lookup(var.node_group[count.index], "release_version", null)
   version               = lookup(var.node_group[count.index], "version", null)
 
-  launch_template {
-    id      = lookup(var.node_group[count.index], "launch_template_id", null)
-    name    = lookup(var.node_group[count.index], "launch_template_name", null)
-    version = lookup(var.node_group[count.index], "launch_template_version", null)
+  dynamic "launch_template" {
+    for_each = lookup(var.node_group[count.index], "launch_template", [])
+    content {
+      id      = lookup(launch_template.value, "id", null)
+      name    = lookup(launch_template.value, "name", null)
+      version = lookup(launch_template.value, "version", null)
+    }
   }
 
   remote_access {
@@ -93,7 +96,11 @@ resource "aws_eks_node_group" "main" {
     }
   }
 
-  tags  = var.default_tags
+  tags  = merge(
+    {
+      Name = lookup(var.node_group[count.index], "node_group_name", null)
+    },var.default_tags
+  )
 
   depends_on = [
     aws_iam_role_policy_attachment.node_group_eks_registry,
