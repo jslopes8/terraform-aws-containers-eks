@@ -39,20 +39,16 @@ module "cluster" {
         }
     ]
 
-    fargate_profile = [
-        {
+    fargate_profile = [{
             name        = "pod_fargate"
             subnet_ids  = [ 
                 "subnet-03eb1cb4c1b7edd0f", 
                 "subnet-0a58abfcf70262ab9" 
             ]
-            selector = [
-                {
+            selector = [{
                     namespace = "kube-system"
-                }
-            ]
-        }
-    ]
+            }]
+    }]
 }
 ```
 Example Creating a Complete EKS Cluster on Fargate Host
@@ -81,25 +77,15 @@ module "cluster" {
             name        = "kube-fargate"
             subnet_ids  = data.aws_subnet_ids.find.ids
             selector = [
-                {
-                    namespace = "kube-system"
-                },
-                {
-                    namespace = "default"
-                },
-                {
-                    namespace = "kube-ingress"
-                }
+                { namespace = "kube-system" },
+                { namespace = "default" },
+                { namespace = "kube-ingress" }
             ]
         },
         {
             name        = "application-fargate"
             subnet_ids  = data.aws_subnet_ids.find.ids
-            selector = [
-                {
-                    namespace = "2048-game"
-                }
-            ]
+            selector = [{ namespace = "2048-game" }]
         }
     ]
 
